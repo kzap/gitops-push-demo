@@ -1,0 +1,71 @@
+name: Demo GitOps Push
+
+on:
+  workflow_dispatch:
+    inputs:
+      application-name:
+        description: 'Application to deploy'
+        required: true
+        type: choice
+        options:
+          - echo-service
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        type: environment
+      deployment-method:
+        description: 'Deployment method'
+        required: true
+        type: choice
+        default: helm
+        options:
+          - helm
+          - kustomize
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    
+    steps:
+      - name: Checkout service repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to GitOps with Helm
+        if: inputs.deployment-method == 'helm'
+        uses: kzap/gitops-push@v0.1.0
+        with:
+          gitops-token: ${{ github.token }}
+          gitops-repository: kzap/gitops-push-demo
+          gitops-path: 'gitops-repo/'
+          environment: ${{ inputs.environment }}
+          application-name: ${{ inputs.application-name }}
+          application-manifests-path: ./${{ inputs.application-name }}/charts/${{ inputs.application-name }}
+          custom-values: |
+            environment: ${{ inputs.environment }}
+
+      - name: Deploy to GitOps with Kustomize
+        if: inputs.deployment-method == 'kustomize'
+        uses: kzap/gitops-push@v0.1.0
+        with:
+          gitops-token: ${{ github.token }}
+          gitops-repository: kzap/gitops-push-demo
+          gitops-path: 'gitops-repo/'
+          environment: ${{ inputs.environment }}
+          application-name: ${{ inputs.application-name }}
+          application-manifests-path: ./${{ inputs.application-name }}/kustomize/overlays/${{ inputs.environment }}
+          custom-values: |
+            environment: ${{ inputs.environment }}
+
+      - name: Summary
+        run: |
+          echo "## Deployment Summary :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Application**: ${{ inputs.application-name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Environment**: ${{ inputs.environment }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Method**: ${{ inputs.deployment-method }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **GitOps Repository**: ${{ vars.GITOPS_REPOSITORY || 'your-org/gitops-repo' }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Deployment manifests have been pushed to the GitOps repository." >> $GITHUB_STEP_SUMMARY
+          echo "ArgoCD will automatically sync the changes to the cluster." >> $GITHUB_STEP_SUMMARY
+
