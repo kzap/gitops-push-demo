@@ -1,0 +1,38 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: dev
+
+bases:
+  - ../../base
+
+namePrefix: dev-
+
+commonLabels:
+  environment: dev
+
+replicas:
+  - name: echo-service
+    count: 1
+
+patches:
+  - target:
+      kind: Deployment
+      name: echo-service
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/args/0
+        value: "-text=Hello from DEV environment"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/cpu
+        value: "100m"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/memory
+        value: "128Mi"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/cpu
+        value: "50m"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/memory
+        value: "64Mi"
+

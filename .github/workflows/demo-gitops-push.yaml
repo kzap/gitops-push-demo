@@ -9,6 +9,8 @@ on:
         type: choice
         options:
           - echo-service
+          - another-service
+          - moar-services
       environment:
         description: 'Environment to deploy to'
         required: true
