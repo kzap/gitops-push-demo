@@ -25,6 +25,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      # configure github.token to have write permissions to this repo as we are also using it for the GitOps repo
+      contents: write
     environment: ${{ inputs.environment }}
     
     steps:
