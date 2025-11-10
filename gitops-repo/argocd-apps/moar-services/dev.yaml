@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/kzap/gitops-push-demo.git
     targetRevision: main
-    path: gitops-repo/moar-services/dev/service-repo/moar-services/charts/moar-services/
+    path: gitops-repo/moar-services/dev/service-repo/moar-services/kustomize/
   destination:
     server: https://kubernetes.default.svc
     namespace: moar-services
