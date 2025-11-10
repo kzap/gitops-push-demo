@@ -1,0 +1,7 @@
+apiVersion: v2
+name: echo-service
+description: A Helm chart for the HTTP Echo Service
+type: application
+version: 0.1.0
+appVersion: "latest"
+

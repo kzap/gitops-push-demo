@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/kzap/gitops-push-demo.git
     targetRevision: main
-    path: gitops-repo/echo-service/dev/echo-service/charts/echo-service/
+    path: gitops-repo/echo-service/dev/service-repo/echo-service/charts/echo-service/
   destination:
     server: https://kubernetes.default.svc
     namespace: echo-service
