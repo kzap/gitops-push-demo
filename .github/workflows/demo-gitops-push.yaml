@@ -45,7 +45,7 @@ jobs:
           gitops-path: 'gitops-repo/'
           environment: ${{ inputs.environment }}
           application-name: ${{ inputs.application-name }}
-          application-manifests-path: ./service-repo/${{ inputs.application-name }}/charts/${{ inputs.application-name }}
+          application-manifests-path: ./service-repo/${{ inputs.application-name }}/charts/
           custom-values: |
             environment: ${{ inputs.environment }}
 
@@ -58,7 +58,7 @@ jobs:
           gitops-path: 'gitops-repo/'
           environment: ${{ inputs.environment }}
           application-name: ${{ inputs.application-name }}
-          application-manifests-path: ./service-repo/${{ inputs.application-name }}/kustomize/overlays/${{ inputs.environment }}
+          application-manifests-path: ./service-repo/${{ inputs.application-name }}/kustomize/
           custom-values: |
             environment: ${{ inputs.environment }}
 
