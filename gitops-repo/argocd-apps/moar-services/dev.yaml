@@ -3,17 +3,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: echo-service-stage
+  name: moar-services-dev
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/kzap/gitops-push-demo.git
     targetRevision: main
-    path: gitops-repo/echo-service/stage/service-repo/echo-service/charts/echo-service/
+    path: gitops-repo/moar-services/dev/service-repo/moar-services/charts/moar-services/
   destination:
     server: https://kubernetes.default.svc
-    namespace: echo-service
+    namespace: moar-services
   syncPolicy:
     automated:
       prune: true

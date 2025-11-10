@@ -1,0 +1,23 @@
+replicaCount: 1
+
+image:
+  repository: hashicorp/http-echo
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 5678
+  targetPort: 5678
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+echo:
+  text: "Hello from echo-service"
+
