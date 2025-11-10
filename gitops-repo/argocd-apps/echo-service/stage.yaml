@@ -3,14 +3,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: echo-service-dev
+  name: echo-service-stage
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/kzap/gitops-push-demo.git
     targetRevision: main
-    path: gitops-repo/echo-service/dev/service-repo/echo-service/charts/echo-service/
+    path: gitops-repo/echo-service/stage/service-repo/echo-service/kustomize/overlays/stage/
   destination:
     server: https://kubernetes.default.svc
     namespace: echo-service
