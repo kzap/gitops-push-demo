@@ -1,0 +1,22 @@
+---
+# Source: argocd-app/templates/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: moar-services-stage
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/kzap/gitops-push-demo.git
+    targetRevision: main
+    path: gitops-repo/moar-services/stage/service-repo/moar-services/charts/
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: moar-services
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
