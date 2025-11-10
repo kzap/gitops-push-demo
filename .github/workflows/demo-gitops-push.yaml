@@ -32,7 +32,7 @@ jobs:
     
     steps:
       - name: Checkout service repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Deploy to GitOps with Helm
         if: inputs.deployment-method == 'helm'
@@ -43,7 +43,7 @@ jobs:
           gitops-path: 'gitops-repo/'
           environment: ${{ inputs.environment }}
           application-name: ${{ inputs.application-name }}
-          application-manifests-path: ./${{ inputs.application-name }}/charts/${{ inputs.application-name }}
+          application-manifests-path: ./service-repo/${{ inputs.application-name }}/charts/${{ inputs.application-name }}
           custom-values: |
             environment: ${{ inputs.environment }}
 
@@ -56,7 +56,7 @@ jobs:
           gitops-path: 'gitops-repo/'
           environment: ${{ inputs.environment }}
           application-name: ${{ inputs.application-name }}
-          application-manifests-path: ./${{ inputs.application-name }}/kustomize/overlays/${{ inputs.environment }}
+          application-manifests-path: ./service-repo/${{ inputs.application-name }}/kustomize/overlays/${{ inputs.environment }}
           custom-values: |
             environment: ${{ inputs.environment }}
 
